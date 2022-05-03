@@ -1,0 +1,52 @@
+﻿<Page x:Class="OrderExecutionControl.Pages.PageEmployeeEdit"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:OrderExecutionControl.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="590" d:DesignWidth="960"
+      Title="PageEmployeeEdit">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.RowSpan="9" Grid.ColumnSpan="2" Background="#28000000" Margin="-20" BorderThickness="0,0,4,4" CornerRadius="10" BorderBrush="#000000"/>
+            <TextBlock Style="{DynamicResource FirstStyleTextBlock}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right">Фамилия</TextBlock>
+            <TextBlock Style="{DynamicResource FirstStyleTextBlock}" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">Имя</TextBlock>
+            <TextBlock Style="{DynamicResource FirstStyleTextBlock}" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">Отчество</TextBlock>
+            <TextBlock Style="{DynamicResource FirstStyleTextBlock}" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">Телефон</TextBlock>
+            <TextBlock Style="{DynamicResource FirstStyleTextBlock}" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right">Логин</TextBlock>
+            <TextBlock Style="{DynamicResource FirstStyleTextBlock}" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right">Пароль</TextBlock>
+            <TextBlock Style="{DynamicResource FirstStyleTextBlock}" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right">Отдел</TextBlock>
+            <TextBlock Style="{DynamicResource FirstStyleTextBlock}" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right">Должность</TextBlock>
+            <!--Style="{DynamicResource FirstStyleTextBox}"-->
+            <TextBox MaxLength="45" x:Name="surname_employee" Grid.Row="0" Grid.Column="1" Text="{Binding surname_employee}" Margin="7"></TextBox>
+            <TextBox MaxLength="45" x:Name="name_employee" Grid.Row="1" Grid.Column="1" Text="{Binding name_employee}" Margin="7"></TextBox>
+            <TextBox MaxLength="45" x:Name="patronymic_employee" Grid.Row="2" Grid.Column="1" Text="{Binding patronymic_employee}" Margin="7"></TextBox>
+            <TextBox MaxLength="11" x:Name="telephone_employee" Grid.Row="3" Grid.Column="1" Text="{Binding telephone_employee}" Margin="7" ></TextBox>
+            <TextBox MaxLength="20" x:Name="login" Grid.Row="4" Grid.Column="1" Text="{Binding login}" Margin="7"></TextBox>
+            <TextBox MaxLength="20" x:Name="password" Grid.Row="5" Grid.Column="1" Text="{Binding password}" Margin="7"></TextBox>
+            <ComboBox x:Name="ComboDepartment" Grid.Row="6" Grid.Column="1" SelectedItem = "{Binding department}" DisplayMemberPath = "name_department" Margin="7"></ComboBox>
+            <ComboBox x:Name="ComboPosition" Grid.Row="7" Grid.Column="1" SelectedItem="{Binding position}" DisplayMemberPath="name_position" Margin="7"></ComboBox>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="9" Grid.ColumnSpan="2">
+            <Button Content="Сохранить" Width="90" Height="25" Margin="9" Click="Save_button"></Button>
+            <Button Content="Отмена" Width="90" Height="25" Margin="9" Click="Cancel_button"></Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

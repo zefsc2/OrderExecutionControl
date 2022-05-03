@@ -1,0 +1,96 @@
+﻿<Page x:Class="OrderExecutionControl.Pages.PageEmployee"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:OrderExecutionControl.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="590" d:DesignWidth="960"
+      Title="Employee" IsVisibleChanged="Page_IsVisibleChanged">
+    <Page.Resources>
+        <Style TargetType="DataGridCell" x:Key="styleForDGCell">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="{x:Null}" />
+            <Setter Property="BorderBrush" Value="#202225" />
+        </Style>
+        <Style TargetType="DataGridRow" x:Key="styleForDGRow">
+            <Setter Property="Background" Value="{x:Null}" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#202225" />
+        </Style>
+        <Style TargetType="DataGridColumnHeader" x:Key="styleForDGHColumn">
+            <Setter Property="Background" Value="{x:Null}" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#202225" />
+            <Setter Property="Padding" Value="10,2,0,2" />
+        </Style>
+        <Style TargetType="DataGridRowHeader" x:Key="styleForDGHRow">
+            <Setter Property="Background" Value="{x:Null}" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0,0,1,0" />
+            <Setter Property="BorderBrush" Value="#202225" />
+            <Setter Property="Padding" Value="10,2,0,2" />
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <!--<ListView Margin="10,10,10,50" Name="EmployeeGrid" Background="#2f3136" BorderBrush="#202225" Foreground="White">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding surname_employee}" Width="100">
+                    </GridViewColumn>
+                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding name_employee}" Width="100"></GridViewColumn>
+                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding patronymic_employee}" Width="100"></GridViewColumn>
+                    <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding telephone_employee}" Width="100"></GridViewColumn>
+                    <GridViewColumn Header="Отдел" DisplayMemberBinding="{Binding department.name_department}" Width="100"></GridViewColumn>
+                    <GridViewColumn Header="Должность" DisplayMemberBinding="{Binding position.name_position}" Width="100"></GridViewColumn>
+                    --><!--<GridViewColumn>
+                        <GridViewColumnTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="Edit" Content="Редактировать" Click="Edit_Click"></Button>
+                            </DataTemplate>
+                        </GridViewColumnTemplateColumn.CellTemplate>
+                    </GridViewColumn>--><!--
+                    <GridViewColumn Header="Age" Width="50" DisplayMemberBinding="{Binding Age}" />
+                </GridView>
+            </ListView.View>
+        </ListView>-->
+        <DataGrid Margin="10,10,10,50" x:Name="EmployeeGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                  RowStyle="{StaticResource ResourceKey=styleForDGRow}"
+                  CellStyle="{StaticResource ResourceKey=styleForDGCell}"
+                  ColumnHeaderStyle="{StaticResource ResourceKey=styleForDGHColumn}"
+                  HeadersVisibility="Column"
+                  Background="#2f3136" BorderBrush="#202225" Foreground="White">
+            
+            <!--RowHeaderStyle="{StaticResource ResourceKey=styleForDGHRow}"-->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding surname_employee}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Имя" Binding="{Binding name_employee}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Отчество" Binding="{Binding patronymic_employee}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding telephone_employee}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Отдел" Binding="{Binding department.name_department}" Width="2*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Должность" Binding="{Binding position.name_position}" Width="2*"></DataGridTextColumn>
+                <DataGridTemplateColumn x:Name="columnEdit">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="Edit" Content="Редактировать" Click="Edit_Click"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Name="AddEmployee" Click="AddEmployee_Click" Content="Добавить" Width="90" Height="30" Margin="10"></Button>
+            <Button Name="DeleteEmployee" Click="DeleteEmployee_Click" Content="Удалить" Width="90" Height="30" Margin="10"></Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <TextBlock Text="Поиск:" FontSize="18" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+            <TextBox Name="TextBoxSearch" Width="250" Margin="10" TextChanged="TextBoxSearch_TextChanged"></TextBox>
+        </StackPanel>
+
+    </Grid> 
+</Page>

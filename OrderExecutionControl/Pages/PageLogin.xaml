@@ -1,0 +1,32 @@
+﻿<Page x:Class="OrderExecutionControl.Pages.PageLogin"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:OrderExecutionControl.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="MainPage">
+
+    <Grid>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
+            <Border Grid.RowSpan="4" Grid.ColumnSpan="2" Background="#28000000" Margin="-20" BorderThickness="0,0,4,4" CornerRadius="10" BorderBrush="#000000"/>
+            <TextBlock Style="{StaticResource TextBlockStandart}" Text="Выполните вход" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+            <TextBlock Style="{StaticResource TextBlockStandart}" Text="Логин:" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+            <TextBlock Style="{StaticResource TextBlockStandart}" Text="Пароль:" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
+            <TextBox x:Name="login" VerticalAlignment="Center"   Width="150" Grid.Row="1" Grid.Column="1"></TextBox>
+            <PasswordBox x:Name="password" VerticalAlignment="Center" Width="150" Grid.Row="2" Grid.Column="1"></PasswordBox>
+            <Button Content="Вход" Width="70" Height="25" Click="Button_Click_Login" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
+        </Grid>
+    </Grid>
+</Page>

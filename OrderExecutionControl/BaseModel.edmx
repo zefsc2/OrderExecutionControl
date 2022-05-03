@@ -1,0 +1,530 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище OrderExecutionControlModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="commission">
+          <Key>
+            <PropertyRef Name="code_commission" />
+          </Key>
+          <Property Name="code_commission" Type="int" Nullable="false" />
+          <Property Name="name_commission" Type="varchar" MaxLength="45" />
+          <Property Name="text_commission" Type="varchar" MaxLength="1024" />
+          <Property Name="code_status" Type="int" Nullable="false" />
+          <Property Name="date_of_registration_commssion" Type="datetime" />
+          <Property Name="start_date_commission" Type="datetime" />
+          <Property Name="end_date_commission" Type="datetime" />
+          <Property Name="attached_file" Type="varchar" MaxLength="100" />
+          <Property Name="code_employee" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="code_department" />
+          </Key>
+          <Property Name="code_department" Type="int" Nullable="false" />
+          <Property Name="name_department" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="code_employee" />
+          </Key>
+          <Property Name="code_employee" Type="int" Nullable="false" />
+          <Property Name="surname_employee" Type="varchar" MaxLength="45" />
+          <Property Name="name_employee" Type="varchar" MaxLength="45" />
+          <Property Name="patronymic_employee" Type="varchar" MaxLength="45" />
+          <Property Name="telephone_employee" Type="char" MaxLength="11" />
+          <Property Name="code_department" Type="int" Nullable="false" />
+          <Property Name="code_position" Type="int" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="20" />
+          <Property Name="password" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="position">
+          <Key>
+            <PropertyRef Name="code_position" />
+          </Key>
+          <Property Name="code_position" Type="int" Nullable="false" />
+          <Property Name="name_position" Type="varchar" MaxLength="45" />
+          <Property Name="position_priority" Type="int" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="code_status" />
+          </Key>
+          <Property Name="code_status" Type="int" Nullable="false" />
+          <Property Name="name_status" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="subtask">
+          <Key>
+            <PropertyRef Name="code_subtask" />
+          </Key>
+          <Property Name="code_subtask" Type="int" Nullable="false" />
+          <Property Name="name_subtask" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="text_subtask" Type="varchar" MaxLength="1024" />
+          <Property Name="date_of_registration_subtask" Type="datetime" />
+          <Property Name="start_date_subtask" Type="datetime" />
+          <Property Name="end_date_subtask" Type="datetime" />
+          <Property Name="code_commission" Type="int" Nullable="false" />
+          <Property Name="code_employee" Type="int" Nullable="false" />
+          <Property Name="code_status" Type="int" Nullable="false" />
+          <Property Name="attached_file" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="fk_commission_employee1">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="commission" Type="Self.commission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="code_employee" />
+            </Principal>
+            <Dependent Role="commission">
+              <PropertyRef Name="code_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_commission_status1">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="commission" Type="Self.commission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="code_status" />
+            </Principal>
+            <Dependent Role="commission">
+              <PropertyRef Name="code_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_employee_department1">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="code_department" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="code_department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_employee_position">
+          <End Role="position" Type="Self.position" Multiplicity="1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="position">
+              <PropertyRef Name="code_position" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="code_position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_subtask_commission1">
+          <End Role="commission" Type="Self.commission" Multiplicity="1" />
+          <End Role="subtask" Type="Self.subtask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="commission">
+              <PropertyRef Name="code_commission" />
+            </Principal>
+            <Dependent Role="subtask">
+              <PropertyRef Name="code_commission" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_subtask_employee1">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="subtask" Type="Self.subtask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="code_employee" />
+            </Principal>
+            <Dependent Role="subtask">
+              <PropertyRef Name="code_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_subtask_status1">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="subtask" Type="Self.subtask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="code_status" />
+            </Principal>
+            <Dependent Role="subtask">
+              <PropertyRef Name="code_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище OrderExecutionControlModelContainer">
+          <EntitySet Name="commission" EntityType="Self.commission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="position" EntityType="Self.position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="status" EntityType="Self.status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="subtask" EntityType="Self.subtask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_commission_employee1" Association="Self.fk_commission_employee1">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="commission" EntitySet="commission" />
+          </AssociationSet>
+          <AssociationSet Name="fk_commission_status1" Association="Self.fk_commission_status1">
+            <End Role="status" EntitySet="status" />
+            <End Role="commission" EntitySet="commission" />
+          </AssociationSet>
+          <AssociationSet Name="fk_employee_department1" Association="Self.fk_employee_department1">
+            <End Role="department" EntitySet="department" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="fk_employee_position" Association="Self.fk_employee_position">
+            <End Role="position" EntitySet="position" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="fk_subtask_commission1" Association="Self.fk_subtask_commission1">
+            <End Role="commission" EntitySet="commission" />
+            <End Role="subtask" EntitySet="subtask" />
+          </AssociationSet>
+          <AssociationSet Name="fk_subtask_employee1" Association="Self.fk_subtask_employee1">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="subtask" EntitySet="subtask" />
+          </AssociationSet>
+          <AssociationSet Name="fk_subtask_status1" Association="Self.fk_subtask_status1">
+            <End Role="status" EntitySet="status" />
+            <End Role="subtask" EntitySet="subtask" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OrderExecutionControlModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="commission">
+          <Key>
+            <PropertyRef Name="code_commission" />
+          </Key>
+          <Property Name="code_commission" Type="Int32" Nullable="false" />
+          <Property Name="name_commission" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="text_commission" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="code_status" Type="Int32" Nullable="false" />
+          <Property Name="date_of_registration_commssion" Type="DateTime" Precision="3" />
+          <Property Name="start_date_commission" Type="DateTime" Precision="3" />
+          <Property Name="end_date_commission" Type="DateTime" Precision="3" />
+          <Property Name="attached_file" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="code_employee" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.fk_commission_employee1" FromRole="commission" ToRole="employee" />
+          <NavigationProperty Name="status" Relationship="Self.fk_commission_status1" FromRole="commission" ToRole="status" />
+          <NavigationProperty Name="subtask" Relationship="Self.fk_subtask_commission1" FromRole="commission" ToRole="subtask" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="code_department" />
+          </Key>
+          <Property Name="code_department" Type="Int32" Nullable="false" />
+          <Property Name="name_department" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="employee" Relationship="Self.fk_employee_department1" FromRole="department" ToRole="employee" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="code_employee" />
+          </Key>
+          <Property Name="code_employee" Type="Int32" Nullable="false" />
+          <Property Name="surname_employee" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="name_employee" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="patronymic_employee" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="telephone_employee" Type="String" MaxLength="11" FixedLength="true" Unicode="false" />
+          <Property Name="code_department" Type="Int32" Nullable="false" />
+          <Property Name="code_position" Type="Int32" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="commission" Relationship="Self.fk_commission_employee1" FromRole="employee" ToRole="commission" />
+          <NavigationProperty Name="department" Relationship="Self.fk_employee_department1" FromRole="employee" ToRole="department" />
+          <NavigationProperty Name="position" Relationship="Self.fk_employee_position" FromRole="employee" ToRole="position" />
+          <NavigationProperty Name="subtask" Relationship="Self.fk_subtask_employee1" FromRole="employee" ToRole="subtask" />
+        </EntityType>
+        <EntityType Name="position">
+          <Key>
+            <PropertyRef Name="code_position" />
+          </Key>
+          <Property Name="code_position" Type="Int32" Nullable="false" />
+          <Property Name="name_position" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="position_priority" Type="Int32" />
+          <NavigationProperty Name="employee" Relationship="Self.fk_employee_position" FromRole="position" ToRole="employee" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="code_status" />
+          </Key>
+          <Property Name="code_status" Type="Int32" Nullable="false" />
+          <Property Name="name_status" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="commission" Relationship="Self.fk_commission_status1" FromRole="status" ToRole="commission" />
+          <NavigationProperty Name="subtask" Relationship="Self.fk_subtask_status1" FromRole="status" ToRole="subtask" />
+        </EntityType>
+        <EntityType Name="subtask">
+          <Key>
+            <PropertyRef Name="code_subtask" />
+          </Key>
+          <Property Name="code_subtask" Type="Int32" Nullable="false" />
+          <Property Name="name_subtask" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="text_subtask" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="date_of_registration_subtask" Type="DateTime" Precision="3" />
+          <Property Name="start_date_subtask" Type="DateTime" Precision="3" />
+          <Property Name="end_date_subtask" Type="DateTime" Precision="3" />
+          <Property Name="code_commission" Type="Int32" Nullable="false" />
+          <Property Name="code_employee" Type="Int32" Nullable="false" />
+          <Property Name="code_status" Type="Int32" Nullable="false" />
+          <Property Name="attached_file" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="commission" Relationship="Self.fk_subtask_commission1" FromRole="subtask" ToRole="commission" />
+          <NavigationProperty Name="employee" Relationship="Self.fk_subtask_employee1" FromRole="subtask" ToRole="employee" />
+          <NavigationProperty Name="status" Relationship="Self.fk_subtask_status1" FromRole="subtask" ToRole="status" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="fk_commission_employee1">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="commission" Type="Self.commission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="code_employee" />
+            </Principal>
+            <Dependent Role="commission">
+              <PropertyRef Name="code_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_commission_status1">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="commission" Type="Self.commission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="code_status" />
+            </Principal>
+            <Dependent Role="commission">
+              <PropertyRef Name="code_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_subtask_commission1">
+          <End Role="commission" Type="Self.commission" Multiplicity="1" />
+          <End Role="subtask" Type="Self.subtask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="commission">
+              <PropertyRef Name="code_commission" />
+            </Principal>
+            <Dependent Role="subtask">
+              <PropertyRef Name="code_commission" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_employee_department1">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="code_department" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="code_department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_employee_position">
+          <End Role="position" Type="Self.position" Multiplicity="1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="position">
+              <PropertyRef Name="code_position" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="code_position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_subtask_employee1">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="subtask" Type="Self.subtask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="code_employee" />
+            </Principal>
+            <Dependent Role="subtask">
+              <PropertyRef Name="code_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_subtask_status1">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="subtask" Type="Self.subtask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="code_status" />
+            </Principal>
+            <Dependent Role="subtask">
+              <PropertyRef Name="code_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OrderExecutionControlEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="commission" EntityType="Self.commission" />
+          <EntitySet Name="department" EntityType="Self.department" />
+          <EntitySet Name="employee" EntityType="Self.employee" />
+          <EntitySet Name="position" EntityType="Self.position" />
+          <EntitySet Name="status" EntityType="Self.status" />
+          <EntitySet Name="subtask" EntityType="Self.subtask" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="fk_commission_employee1" Association="Self.fk_commission_employee1">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="commission" EntitySet="commission" />
+          </AssociationSet>
+          <AssociationSet Name="fk_commission_status1" Association="Self.fk_commission_status1">
+            <End Role="status" EntitySet="status" />
+            <End Role="commission" EntitySet="commission" />
+          </AssociationSet>
+          <AssociationSet Name="fk_subtask_commission1" Association="Self.fk_subtask_commission1">
+            <End Role="commission" EntitySet="commission" />
+            <End Role="subtask" EntitySet="subtask" />
+          </AssociationSet>
+          <AssociationSet Name="fk_employee_department1" Association="Self.fk_employee_department1">
+            <End Role="department" EntitySet="department" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="fk_employee_position" Association="Self.fk_employee_position">
+            <End Role="position" EntitySet="position" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="fk_subtask_employee1" Association="Self.fk_subtask_employee1">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="subtask" EntitySet="subtask" />
+          </AssociationSet>
+          <AssociationSet Name="fk_subtask_status1" Association="Self.fk_subtask_status1">
+            <End Role="status" EntitySet="status" />
+            <End Role="subtask" EntitySet="subtask" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище OrderExecutionControlModelContainer" CdmEntityContainer="OrderExecutionControlEntities">
+          <EntitySetMapping Name="commission">
+            <EntityTypeMapping TypeName="OrderExecutionControlModel.commission">
+              <MappingFragment StoreEntitySet="commission">
+                <ScalarProperty Name="code_commission" ColumnName="code_commission" />
+                <ScalarProperty Name="name_commission" ColumnName="name_commission" />
+                <ScalarProperty Name="text_commission" ColumnName="text_commission" />
+                <ScalarProperty Name="code_status" ColumnName="code_status" />
+                <ScalarProperty Name="date_of_registration_commssion" ColumnName="date_of_registration_commssion" />
+                <ScalarProperty Name="start_date_commission" ColumnName="start_date_commission" />
+                <ScalarProperty Name="end_date_commission" ColumnName="end_date_commission" />
+                <ScalarProperty Name="attached_file" ColumnName="attached_file" />
+                <ScalarProperty Name="code_employee" ColumnName="code_employee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="department">
+            <EntityTypeMapping TypeName="OrderExecutionControlModel.department">
+              <MappingFragment StoreEntitySet="department">
+                <ScalarProperty Name="code_department" ColumnName="code_department" />
+                <ScalarProperty Name="name_department" ColumnName="name_department" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employee">
+            <EntityTypeMapping TypeName="OrderExecutionControlModel.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="code_employee" ColumnName="code_employee" />
+                <ScalarProperty Name="surname_employee" ColumnName="surname_employee" />
+                <ScalarProperty Name="name_employee" ColumnName="name_employee" />
+                <ScalarProperty Name="patronymic_employee" ColumnName="patronymic_employee" />
+                <ScalarProperty Name="telephone_employee" ColumnName="telephone_employee" />
+                <ScalarProperty Name="code_department" ColumnName="code_department" />
+                <ScalarProperty Name="code_position" ColumnName="code_position" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="position">
+            <EntityTypeMapping TypeName="OrderExecutionControlModel.position">
+              <MappingFragment StoreEntitySet="position">
+                <ScalarProperty Name="code_position" ColumnName="code_position" />
+                <ScalarProperty Name="name_position" ColumnName="name_position" />
+                <ScalarProperty Name="position_priority" ColumnName="position_priority" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="status">
+            <EntityTypeMapping TypeName="OrderExecutionControlModel.status">
+              <MappingFragment StoreEntitySet="status">
+                <ScalarProperty Name="code_status" ColumnName="code_status" />
+                <ScalarProperty Name="name_status" ColumnName="name_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subtask">
+            <EntityTypeMapping TypeName="OrderExecutionControlModel.subtask">
+              <MappingFragment StoreEntitySet="subtask">
+                <ScalarProperty Name="code_subtask" ColumnName="code_subtask" />
+                <ScalarProperty Name="name_subtask" ColumnName="name_subtask" />
+                <ScalarProperty Name="text_subtask" ColumnName="text_subtask" />
+                <ScalarProperty Name="date_of_registration_subtask" ColumnName="date_of_registration_subtask" />
+                <ScalarProperty Name="start_date_subtask" ColumnName="start_date_subtask" />
+                <ScalarProperty Name="end_date_subtask" ColumnName="end_date_subtask" />
+                <ScalarProperty Name="code_commission" ColumnName="code_commission" />
+                <ScalarProperty Name="code_employee" ColumnName="code_employee" />
+                <ScalarProperty Name="code_status" ColumnName="code_status" />
+                <ScalarProperty Name="attached_file" ColumnName="attached_file" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="OrderExecutionControlModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

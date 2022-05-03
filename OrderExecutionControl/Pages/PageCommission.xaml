@@ -1,0 +1,94 @@
+﻿<Page x:Class="OrderExecutionControl.Pages.PageCommission"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:OrderExecutionControl.Pages"
+      xmlns:order="clr-namespace:OrderExecutionControl"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      mc:Ignorable="d" 
+      d:DesignHeight="590" d:DesignWidth="960"
+      Title="PageCommission" IsVisibleChanged="Page_IsVisibleChanged">
+    <Page.Resources>
+        <order:MultiplyFormulaStringConverter x:Key="MultiplyFormulaStringConverter"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Background="#2f3136" x:Name="ListOrder" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Height="30" Margin="12,5" x:Name="ButtonAddCommission" FontSize="15" Content="Добавить новое поручение" VerticalAlignment="Top" Click="ButtonAddCommission_Click"></Button>
+            <ListView Grid.Row="2" Background="{x:Null}" BorderBrush="{x:Null}" x:Name="ListViewCommission">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Button Click="LoadInfoOrder" Name="button" Style="{DynamicResource ButtonMenuCommissions}">
+                            <Grid Margin="0,4" Width="210" Name="grid">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Foreground="White" FontSize="16" Margin="5,0,0,0" Text="{Binding name_commission}"></TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Foreground="White" FontSize="13.333" Margin="10,2,7,2" Text="Статус:"></TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Foreground="White" FontSize="13.333" Margin="10,2,0,2" Text="Срок:"></TextBlock>
+                                <TextBlock Grid.Column="1" Grid.Row="1" Foreground="White" FontSize="13.333" Margin="10,2,0,2" Text="{Binding status.name_status}"></TextBlock>
+                                <TextBlock Grid.Column="1" Grid.Row="2" Foreground="White" FontSize="13.333" Margin="10,2,0,2">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource MultiplyFormulaStringConverter}" >
+                                            <Binding Path="end_date_commission"/>
+                                            <Binding Source="{x:Static sys:DateTime.Now}"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Style>
+                    <Style TargetType="ListView">
+                        <Setter Property="Focusable" Value="false"/>
+                    </Style>
+                </ListView.Style>
+            </ListView>
+            <!--<Button Style="{DynamicResource ButtonMenuCommission}">
+                    <StackPanel>
+                        <TextBlock Foreground="White" FontSize="16" Margin="5,0,0,0">ПОРУЧЕНИЕ №1</TextBlock>
+                        <TextBlock Foreground="White" FontSize="13.333" Margin="10,2,0,2" >Статус:  123</TextBlock>
+                        <TextBlock Foreground="White" FontSize="13.333" Margin="10,2,0,2" >Срок:  123</TextBlock>
+                    </StackPanel>
+                </Button>-->
+
+            <Grid Grid.Row="1" Name="searchfilter" Height="40">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="44"></RowDefinition>
+                    <RowDefinition Height="44"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button Content="Фильтрация/Поиск" Width="150" HorizontalAlignment="Left" Margin="10 7 0 3" Height="30" Click="OpenClose_Click"></Button>
+                <TextBox Grid.Row="1" Margin="7" Name="TextBoxSearch" TextChanged="TextBoxSearch_TextChanged"></TextBox>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="7">
+                    <TextBlock Foreground="White" FontSize="18" Text="Статус:"></TextBlock>
+                    <ComboBox Margin="7 0 0 0" Width="153" Name="ComboBoxStatus" DisplayMemberPath="name_status" SelectionChanged="ComboBox_SelectionChanged"></ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="7">
+                    <TextBlock Foreground="White" FontSize="18" Text="Срок:"></TextBlock>
+                    <ComboBox Margin="17 0 0 0" Width="153" Name="ComboBoxTerm" SelectionChanged="ComboBox_SelectionChanged"></ComboBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Frame Name="SFrame" Grid.Column="1" NavigationUIVisibility="Hidden">
+        </Frame>
+        
+    </Grid>
+</Page>
